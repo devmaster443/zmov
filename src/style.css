@@ -758,8 +758,15 @@ a {
     display: flex;
     justify-content: space-between;
     width: 100vw;
-    position: absolute;
+    /* position: absolute; */
     pointer-events: none;
+}
+#player-container{
+    display: flex;
+    height: 100vw;
+    align-items: center;
+    flex-direction: column-reverse;
+    gap: 20px;
 }
 #server-select {
     padding: 5px 20px;

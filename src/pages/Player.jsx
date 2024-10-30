@@ -37,7 +37,7 @@ export default function Player() {
         ANIME1SUB: `${playerURLs.VITE_STREAM_ANIME1SUB}/v/${animeTitle}`,
         ANIME2DUB: `${playerURLs.VITE_STREAM_ANIME2DUB}/embed/${animeTitle}-dub`,
         ANIME2SUB: `${playerURLs.VITE_STREAM_ANIME2SUB}/embed/${animeTitle}`,
-        ANIME3DUB: `${playerURLs.VITE_STREAM_ANIME3DUB}/embed/${animeTitle}-dub`,        
+        ANIME3DUB: `${playerURLs.VITE_STREAM_ANIME3DUB}/embed/${animeTitle}-dub`,
         ANIME3SUB: `${playerURLs.VITE_STREAM_ANIME3SUB}/embed/${animeTitle}`,
 
     };
@@ -68,13 +68,13 @@ export default function Player() {
             }
         }
         if (selectedServer === 'VIDLINK') {
-            url += '?primaryColor=B20710&secondaryColor=170000&autoplay=true&nextbutton=true';   
+            url += '?primaryColor=B20710&secondaryColor=170000&autoplay=true&nextbutton=true';
         } else if (selectedServer === 'ANIME1DUB' || selectedServer === 'ANIME1SUB') {
             url += '.html';
         }
         return url;
     };
-    
+
     useEffect(() => {
         const pathSegments = location.pathname.split('/');
         const seasonParam = pathSegments[4];
@@ -88,7 +88,7 @@ export default function Player() {
                 const response = await fetch(`https://api.themoviedb.org/3/${type}/${id}?api_key=${apiKey}&append_to_response=alternative_titles&external_source=imdb_id`);
                 const data = await response.json();
                 setImdbId(data.imdb_id);
-                setAnimeTitle(data.alternative_titles.results.find((item) => item.type === "Romaji")?.title.replace(/\s+/g, '-'));                  
+                setAnimeTitle(data.alternative_titles.results.find((item) => item.type === "Romaji")?.title.replace(/\s+/g, '-'));
 
                 document.title = `${data.title || data.name} ${type === "movie" ? '' : `S${seasonParam}E${episodeParam}`} - zmov`;
 
@@ -169,59 +169,61 @@ export default function Player() {
 
     return (
         <>
-            <div style={{display: "flex", width: "100vw", height: "70vh"}}>
-                <iframe 
-                    src={getServerURL()} 
-                    allowFullScreen={true}
-                    style={{ width: "100%", height: "100%", border: '0' }}
-                ></iframe>
-            </div>
-            <div id="button-grid" style={{top: gridPos}}>
-                <Link to={`/info/${type}/${id}`} id="player-button"><i className="fa-solid fa-arrow-left" alt="Back" style={{fontSize: "26px"}} /></Link>
-                <div style={{display: "flex", alignItems: "center"}}>
-                    <select 
-                        name="servers" 
-                        value={selectedServer} 
-                        onChange={(e) => setSelectedServer(e.target.value)} 
-                        id="server-select"
-                    >   
-                        <option style={{backgroundColor: "rgba(50,50,50,1)"}} selected disabled>ADFREE</option>
-                        <hr/>
-                        <option value="VIDLINK">VIDLINK</option>
-                        <option value="CC">CC (4K)</option>
-                        <option value="NL">NL</option>
-                        <option value="RIP">RIP</option>
-                        <hr/>
-                        <option style={{backgroundColor: "rgba(50,50,50,1)"}} selected disabled>ADS</option>
-                        <hr/>
-                        <option value="VIDBINGE">BINGE</option>
-                        <option value="PRO">PRO</option>
-                        <option value="VIP">VIP</option>
-                        <option value="CLUB">CLUB</option>
-                        <option value="XYZ">XYZ</option>
-                        <option value="MULTI">MULTI</option>
-                        <option value="SS">SMASHY</option>
-                        <hr/>
-                        <option style={{backgroundColor: "rgba(50,50,50,1)"}} selected disabled>LANGUAGE</option>
-                        <hr/>
-                        <option value="FRENCH">FRENCH</option>
-                        <option value="INDIAN">INDIAN</option>
-                        <option value="PORT">PORT</option>
-                        <option value="RUSSIAN">RUSSIAN</option>
-                        <option value="MULTLANG">MULTLANG</option>
-                        <hr/>
-                        <option style={{backgroundColor: "rgba(50,50,50,1)"}} selected disabled>ANIME</option>
-                        <hr/>
-                        <option value="ANIME1DUB">ANI1-DUB</option>
-                        <option value="ANIME1SUB">ANI1-SUB</option>
-                        <option value="ANIME2DUB">ANI2-DUB</option>
-                        <option value="ANIME2SUB">ANI2-SUB</option>
-                        <option value="ANIME3DUB">ANI3-DUB</option>
-                        <option value="ANIME3SUB">ANI3-SUB</option>
-                    </select>
-                    {type === 'tv' && season && episode && (
-                        <Link to={nextEpisodeLink} id="player-button"><i className="fa-solid fa-arrow-right" style={{fontSize: "26px"}} alt="Next" /></Link>
-                    )}
+            <div id="player-container">
+                <div style={{ display: "flex", width: "100vw", height: "70vh" }}>
+                    <iframe
+                        src={getServerURL()}
+                        allowFullScreen={true}
+                        style={{ width: "100%", height: "100%", border: '0' }}
+                    ></iframe>
+                </div>
+                <div id="button-grid" style={{ top: gridPos }}>
+                    <Link to={`/info/${type}/${id}`} id="player-button"><i className="fa-solid fa-arrow-left" alt="Back" style={{ fontSize: "26px" }} /></Link>
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                        <select
+                            name="servers"
+                            value={selectedServer}
+                            onChange={(e) => setSelectedServer(e.target.value)}
+                            id="server-select"
+                        >
+                            <option style={{ backgroundColor: "rgba(50,50,50,1)" }} selected disabled>ADFREE</option>
+                            <hr />
+                            <option value="VIDLINK">VIDLINK</option>
+                            <option value="CC">CC (4K)</option>
+                            <option value="NL">NL</option>
+                            <option value="RIP">RIP</option>
+                            <hr />
+                            <option style={{ backgroundColor: "rgba(50,50,50,1)" }} selected disabled>ADS</option>
+                            <hr />
+                            <option value="VIDBINGE">BINGE</option>
+                            <option value="PRO">PRO</option>
+                            <option value="VIP">VIP</option>
+                            <option value="CLUB">CLUB</option>
+                            <option value="XYZ">XYZ</option>
+                            <option value="MULTI">MULTI</option>
+                            <option value="SS">SMASHY</option>
+                            <hr />
+                            <option style={{ backgroundColor: "rgba(50,50,50,1)" }} selected disabled>LANGUAGE</option>
+                            <hr />
+                            <option value="FRENCH">FRENCH</option>
+                            <option value="INDIAN">INDIAN</option>
+                            <option value="PORT">PORT</option>
+                            <option value="RUSSIAN">RUSSIAN</option>
+                            <option value="MULTLANG">MULTLANG</option>
+                            <hr />
+                            <option style={{ backgroundColor: "rgba(50,50,50,1)" }} selected disabled>ANIME</option>
+                            <hr />
+                            <option value="ANIME1DUB">ANI1-DUB</option>
+                            <option value="ANIME1SUB">ANI1-SUB</option>
+                            <option value="ANIME2DUB">ANI2-DUB</option>
+                            <option value="ANIME2SUB">ANI2-SUB</option>
+                            <option value="ANIME3DUB">ANI3-DUB</option>
+                            <option value="ANIME3SUB">ANI3-SUB</option>
+                        </select>
+                        {type === 'tv' && season && episode && (
+                            <Link to={nextEpisodeLink} id="player-button"><i className="fa-solid fa-arrow-right" style={{ fontSize: "26px" }} alt="Next" /></Link>
+                        )}
+                    </div>
                 </div>
             </div>
         </>
