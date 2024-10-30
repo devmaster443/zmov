@@ -169,7 +169,7 @@ export default function Player() {
 
     return (
         <>
-            <div style={{display: "flex", width: "100vw"}}>
+            <div style={{display: "flex", width: "100vw", height: "70vh"}}>
                 <iframe 
                     src={getServerURL()} 
                     allowFullScreen={true}
